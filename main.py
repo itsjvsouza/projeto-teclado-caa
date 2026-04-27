@@ -29,7 +29,7 @@ CAA = {
     '0': 'Muito obrigado pela atenção de todos, tenham uma boa noite!'
 }
 
-def falar_texto(texto):
+def text_speaker(text):
     def run():
         if lock.locked():
             return
@@ -37,14 +37,14 @@ def falar_texto(texto):
         with lock:
             engine = pyttsx3.init()
             engine.setProperty('rate', 200)
-            engine.say(texto)
+            engine.say(text)
             engine.runAndWait()
             engine.stop()
             del engine
     
     threading.Thread(target=run, daemon=True).start()
 
-for tecla, frase in CAA.items():
-    keyboard.add_hotkey(tecla, falar_texto, args=(frase,))
+for key, text in CAA.items():
+    keyboard.add_hotkey(key, text_speaker, args=(text,))
 
 keyboard.wait('esc')
